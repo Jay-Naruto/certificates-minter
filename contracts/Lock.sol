@@ -12,13 +12,15 @@ contract Lock is ERC721, Ownable{
     using Counters for Counters.Counter;
     using Strings for uint256;
     Counters.Counter _tokenIds;
-
+address[] private _whitelisted;
     mapping(uint256 => string) _tokenURIs;
     struct RenderToken{
         uint256 id;
         string uri;
         string space;
     }
+      mapping (uint256 => address) private _owners;
+    mapping (address => uint256) private _balances;
       mapping(address => bool) private whitelist;
 
     constructor() ERC721("ProfileImageNfts","PIN"){}
@@ -50,8 +52,23 @@ contract Lock is ERC721, Ownable{
      function addToWhitelist(address[] memory _addresses) public onlyOwner {
         for (uint i = 0; i < _addresses.length; i++) {
             whitelist[_addresses[i]] = true;
+               _whitelisted.push(_addresses[i]);
+
         }
     }
+    function getWhitelisted() public view returns (address[] memory) {
+      return _whitelisted;
+}
+function transferNFT(address from, address to, uint256 tokenId) public {
+
+// safeTransferFrom(from, to, tokenId);
+    require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");
+        require(to != address(0), "ERC721: transfer to the zero address");
+
+        _transfer(from, to, tokenId);
+
+ 
+}
 
     function removeFromWhitelist(address[] memory _addresses) public onlyOwner {
         for (uint i = 0; i < _addresses.length; i++) {

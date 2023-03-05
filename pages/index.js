@@ -35,12 +35,14 @@ const { disconnect } = useDisconnect()
 
     setOpen(false)
   }
+  const [showList,setShowList]=useState(0)
+  const [list,setList]=useState([])
   const [fileUrl, setFileUrl] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [whitelistAddress, setWhitelistAddress] = useState("");
   const [loading, setLoading] = useState(false);
- const cA="0xdDCd7634BA854DBb9F8CcBB19767d19BA5045799"
+ const cA="0xC18b2B7151cC12dcAFA3f29991D9b3A23930B78d"
   async function onSubmit(event) {
     event.preventDefault();
     setLoading(true);
@@ -160,6 +162,30 @@ catch(e)
     setLoading(false);
     alert("You have been whitelisted!");
   };
+  const handleList = async (event) => {
+    event.preventDefault();
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(cA, MyNFT.abi, signer);
+  
+      // Call the mint function on the smart contract
+      const transaction = await contract.getWhitelisted();
+      // const x=await transaction.wait();
+      setLoading(false);
+      console.log(transaction)
+      alert("List is fetched!");
+      setList(transaction)
+
+      setShowList(1)
+    }
+    catch(e)
+    {
+      alert(e)
+    }
+
+  };
+
 
 
 
@@ -276,15 +302,19 @@ catch(e)
  />
         </div>
         {
-          address === "0xdd41532DF4DBa94eD835DD9c57fAB5BA97b15E98"
+          address === "0xdd41532DF4DBa94eD835DD9c57fAB5BA97b15E98" || address === "0xc43922683A21aA7f0Ef9FAC557c42d63E0562f6e"
           ?
+         
           <div className={styles.form_group}>
           <label className={styles.label}>Whitelist Address</label>
-          <input className={styles.input} type="text" onChange={(event) => setWhitelistAddress(event.target.value)} />
+          <input className={styles.inputW} type="text" onChange={(event) => setWhitelistAddress(event.target.value)} />
           <button className={styles.button2} onClick={handleWhite}>
-            Click
+          ✔️ 
           </button>
         </div>
+   
+     
+
         :
         ""
 
@@ -292,12 +322,27 @@ catch(e)
      
         
 
-        <button className={styles.button}  onClick={handleMint}>Mint</button>
-        {loading && <p className={styles.loading}>Loading...</p>}
+      
       </form>
+      <div className={styles.form_group2}>
+         
+         <button style={{marginBottom:10}} className={styles.button2} onClick={handleList}>
+           Show list
+         </button>
+         <div>
+          <ul  style={{marginBottom:10}} >
+          {
+          list && showList===1 ? list.map((addr)=>(
+            <li>{addr}</li>
+          )):""
+         }
+          </ul>
+         </div>
+        
+       </div>
+      <button className={styles.button}  onClick={handleMint}>Mint</button>
   </div>
 </div>
-      {/* <h1 className={styles.title}>Mint Your Own Certificate!</h1> */}
   
 
     </div>
