@@ -23,7 +23,7 @@ address[] private _whitelisted;
     mapping (address => uint256) private _balances;
       mapping(address => bool) private whitelist;
 
-    constructor() ERC721("ProfileImageNfts","PIN"){}
+    constructor() ERC721("SAKEC","SKC"){}
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
         _tokenURIs[tokenId]=_tokenURI;

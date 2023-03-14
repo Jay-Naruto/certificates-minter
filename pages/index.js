@@ -42,7 +42,7 @@ const { disconnect } = useDisconnect()
   const [description, setDescription] = useState("");
   const [whitelistAddress, setWhitelistAddress] = useState("");
   const [loading, setLoading] = useState(false);
- const cA="0xC18b2B7151cC12dcAFA3f29991D9b3A23930B78d"
+ const cA="0xbf3748963FC050186AA514e79eEc4913525580C4"
   async function onSubmit(event) {
     event.preventDefault();
     setLoading(true);
