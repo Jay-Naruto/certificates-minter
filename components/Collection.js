@@ -7,7 +7,7 @@ import MyNFT from "../artifacts/contracts/Lock.sol/Lock.json";
 import axios from 'axios';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 export default function Collection({address}) {
- const cA="0xC18b2B7151cC12dcAFA3f29991D9b3A23930B78d"
+ const cA="0xbf3748963FC050186AA514e79eEc4913525580C4"
  const [nftid,setNftId]=useState("")
  const { connect, connectors, error, isLoading, pendingConnector } =
  useConnect()
