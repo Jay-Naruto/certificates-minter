@@ -302,7 +302,7 @@ catch(e)
  />
         </div>
         {
-          address === "0xdd41532DF4DBa94eD835DD9c57fAB5BA97b15E98" || address === "0xc43922683A21aA7f0Ef9FAC557c42d63E0562f6e"
+          address === "0xdd41532DF4DBa94eD835DD9c57fAB5BA97b15E98" || address === "0x57cDb5AC820B9e88473323622e5Bd674723A5526"
           ?
          
           <div className={styles.form_group}>
